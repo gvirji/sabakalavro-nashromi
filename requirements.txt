@@ -1,0 +1,10 @@
+streamlit>=1.49
+pandas>=2.2
+numpy>=2.0
+scikit-learn>=1.6
+plotly>=6.0
+folium>=0.19
+streamlit-folium>=0.24
+requests>=2.32
+pyarrow>=18.0
+FlightRadarAPI>=1.6.0
