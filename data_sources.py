@@ -139,7 +139,7 @@ def append_snapshot(df: pd.DataFrame, path: str = "data/raw/adsb_snapshots.csv")
     return path
 
 
-ddef load_table(uploaded_file):
+def load_table(uploaded_file):
     filename = uploaded_file.name.lower()
 
     if filename.endswith(".csv"):
