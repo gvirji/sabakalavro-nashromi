@@ -139,21 +139,17 @@ def append_snapshot(df: pd.DataFrame, path: str = "data/raw/adsb_snapshots.csv")
     return path
 
 
-def load_table(uploaded_file_or_path) -> pd.DataFrame:
-    """
-    Accept a Streamlit uploaded file, CSV/Parquet path, or pandas-readable file-like object.
-    """
-    if uploaded_file_or_path is None:
-        return pd.DataFrame()
+ddef load_table(uploaded_file):
+    filename = uploaded_file.name.lower()
 
-    name = getattr(uploaded_file_or_path, "name", str(uploaded_file_or_path)).lower()
-
-    if name.endswith(".parquet"):
-        return pd.read_parquet(uploaded_file_or_path)
-    if name.endswith(".csv"):
-        return pd.read_csv(uploaded_file_or_path)
-
-    raise ValueError("Unsupported file type. Use CSV or Parquet.")
+    if filename.endswith(".csv"):
+        return pd.read_csv(uploaded_file)
+    elif filename.endswith(".parquet"):
+        return pd.read_parquet(uploaded_file)
+    elif filename.endswith((".xlsx", ".xls")):
+        return pd.read_excel(uploaded_file)
+    else:
+        raise ValueError(f"Unsupported file format: {filename}")
 
 
 def normalize_columns(df: pd.DataFrame) -> pd.DataFrame:
