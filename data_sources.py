@@ -141,16 +141,28 @@ def append_snapshot(df: pd.DataFrame, path: str = "data/raw/adsb_snapshots.csv")
 
 def load_table(uploaded_file):
     filename = uploaded_file.name.lower()
-
+    
     if filename.endswith(".csv"):
-        return pd.read_csv(uploaded_file)
+        df = pd.read_csv(uploaded_file)
     elif filename.endswith(".parquet"):
-        return pd.read_parquet(uploaded_file)
+        df = pd.read_parquet(uploaded_file)
     elif filename.endswith((".xlsx", ".xls")):
-        return pd.read_excel(uploaded_file)
+        df = pd.read_excel(uploaded_file)
     else:
         raise ValueError(f"Unsupported file format: {filename}")
 
+    # სვეტების სახელების ავტომატური სტანდარტიზაცია
+    column_mapping = {
+        'lat': 'Latitude',
+        'long': 'Longitude',
+        'tail_number': 'ICAO24',
+        'flight': 'Callsign',
+        'alt': 'Altitude',
+        'spotted': 'timestamp'
+    }
+    df = df.rename(columns=column_mapping)
+    
+    return df
 
 def normalize_columns(df: pd.DataFrame) -> pd.DataFrame:
     """
