@@ -139,6 +139,8 @@ def append_snapshot(df: pd.DataFrame, path: str = "data/raw/adsb_snapshots.csv")
     return path
 
 
+dimport pandas as pd
+
 def load_table(uploaded_file):
     filename = uploaded_file.name.lower()
     
@@ -151,7 +153,7 @@ def load_table(uploaded_file):
     else:
         raise ValueError(f"Unsupported file format: {filename}")
 
-    # სვეტების სახელების ავტომატური სტანდარტიზაცია
+    # 1. სვეტების დასახელების სტანდარტიზაცია
     column_mapping = {
         'lat': 'Latitude',
         'long': 'Longitude',
@@ -162,6 +164,10 @@ def load_table(uploaded_file):
     }
     df = df.rename(columns=column_mapping)
     
+    # 2. შერეული თარიღის ფორმატის სწორი გარდაქმნა (რომ NaT არ გახდეს)
+    if 'timestamp' in df.columns:
+        df['timestamp'] = pd.to_datetime(df['timestamp'], format='mixed', errors='coerce')
+
     return df
 
 def normalize_columns(df: pd.DataFrame) -> pd.DataFrame:
