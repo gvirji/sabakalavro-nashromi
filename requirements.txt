@@ -8,3 +8,4 @@ streamlit-folium>=0.24
 requests>=2.32
 pyarrow>=18.0
 FlightRadarAPI>=1.6.0
+openpyxl
