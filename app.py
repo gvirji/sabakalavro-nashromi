@@ -101,7 +101,7 @@ try:
     elif source == "Upload CSV/Parquet":
         uploaded = st.file_uploader(
             "Upload historical ADS-B data",
-            type=["csv", "parquet"],
+           type=["csv", "parquet", "xlsx", "xls"],
         )
         if uploaded is None:
             st.info("Upload a timestamped dataset for trajectory-level analysis.")
